@@ -1,116 +1,409 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Bleedvow • GroveSigilOfficial</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Bleedvow • GroveSigilOfficial — Velmara Portal</title>
   <style>
-    body {
-      margin: 0;
-      padding: 0;
-      background-color: #000;
-      color: #b00000;
-      font-family: 'Courier New', monospace;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      height: 100vh;
-      text-align: center;
+    :root{
+      --bg:#050505;
+      --accent:#b00000;
+      --accent-2:#ff3333;
+      --muted:#bbb;
+      --card:#0b0b0b;
+      --glass: rgba(255,255,255,0.03);
+      --radius:14px;
+      --mono: "Courier New", monospace;
     }
-    h1 {
-      font-size: 2.5rem;
-      letter-spacing: 1px;
-      margin-bottom: 0.2em;
-    }
-    h2 {
-      font-size: 1.5rem;
-      font-weight: 400;
-      margin-bottom: 0.8em;
-    }
-    p {
-      max-width: 600px;
-      line-height: 1.6;
-      font-size: 1rem;
-      margin-bottom: 1.5em;
-    }
-    h3 {
-      margin-bottom: 1em;
-    }
-    .links {
-      margin-top: 1.5em;
-      display: flex;
-      flex-direction: column;
-      gap: 0.8em;
-    }
-    a {
-      color: #b00000;
-      text-decoration: underline;
-      font-weight: bold;
-      transition: all 0.3s ease;
-      text-underline-offset: 4px;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      gap: 0.4em;
-      animation: pulse 2.5s infinite ease-in-out;
-    }
-    a::before {
-      font-size: 1rem;
-      opacity: 0.85;
-    }
-    a.youtube::before {
-      content: "🎥";
-    }
-    a.spotify::before {
-      content: "🎵";
-    }
-    a:hover {
-      color: #ff3333;
-      text-shadow: 0 0 10px #ff3333;
-    }
-    @keyframes pulse {
-      0%, 100% {
-        opacity: 1;
-      }
-      50% {
-        opacity: 0.6;
-      }
-    }
-    footer {
-      position: absolute;
-      bottom: 10px;
-      font-size: 0.8rem;
-      opacity: 0.7;
+    *{box-sizing:border-box}
+    html,body{height:100%;margin:0;font-family:var(--mono);background:var(--bg);color:#fff}
+    .wrap{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:30px}
+    .card{background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));padding:28px;border-radius:var(--radius);width:980px;max-width:96vw;box-shadow:0 6px 30px rgba(0,0,0,0.6);position:relative;border:1px solid rgba(176,0,0,0.08)}
+    header{display:flex;align-items:center;gap:18px;margin-bottom:14px}
+    .sigil{width:74px;height:74px;border-radius:10px;background:linear-gradient(135deg,#111,#1a0000);display:flex;align-items:center;justify-content:center;border:1px solid rgba(255,0,0,0.08);font-weight:700;color:var(--accent);font-size:18px}
+    h1{margin:0;font-size:1.45rem;letter-spacing:0.6px}
+    h2{margin:0;color:var(--muted);font-weight:400;font-size:0.9rem}
+    .columns{display:grid;grid-template-columns:320px 1fr;gap:18px;margin-top:18px}
+    /* login */
+    .login-box{background:var(--card);padding:16px;border-radius:12px;border:1px solid rgba(255,255,255,0.02)}
+    label{display:block;font-size:0.78rem;color:var(--muted);margin-bottom:8px}
+    input[type="text"],input[type="password"]{width:100%;padding:10px;border-radius:8px;background:var(--glass);border:1px solid rgba(255,255,255,0.03);color:#fff;outline:none}
+    .btn{display:inline-block;padding:10px 14px;border-radius:10px;background:linear-gradient(90deg,var(--accent),var(--accent-2));border:none;color:#111;font-weight:700;cursor:pointer;margin-top:10px}
+    .linklike{background:transparent;border:none;color:var(--accent);cursor:pointer;text-decoration:underline;padding:6px 0;font-size:0.9rem}
+    /* main area */
+    .main{background:linear-gradient(180deg, rgba(255,255,255,0.01), rgba(255,255,255,0.00));padding:16px;border-radius:12px;border:1px solid rgba(255,255,255,0.02);min-height:420px}
+    .hero{padding:14px;border-radius:10px;background:linear-gradient(180deg, rgba(176,0,0,0.03), rgba(255,255,255,0.01));margin-bottom:12px}
+    .bigdate{font-size:1.2rem;color:var(--accent);font-weight:700}
+    .muted{color:var(--muted)}
+    .links{display:flex;flex-direction:column;gap:10px;margin-top:10px}
+    a.pulse{color:var(--accent);text-decoration:underline}
+    .nav{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px}
+    button.ghost{background:transparent;border:1px solid rgba(255,255,255,0.04);color:var(--muted);padding:8px 10px;border-radius:8px;cursor:pointer}
+    /* activity & messages */
+    .panel{background:rgba(255,255,255,0.02);padding:12px;border-radius:10px;border:1px dashed rgba(255,255,255,0.02);margin-bottom:12px}
+    .activity-list{max-height:180px;overflow:auto;padding-right:6px}
+    .activity-item{padding:8px;border-bottom:1px solid rgba(255,255,255,0.02);font-size:0.86rem}
+    .form-row{display:flex;gap:8px}
+    textarea{width:100%;min-height:72px;padding:10px;border-radius:8px;background:var(--glass);border:1px solid rgba(255,255,255,0.02);color:#fff;resize:vertical}
+    /* footer */
+    footer{margin-top:10px;color:var(--muted);font-size:0.82rem;text-align:center}
+    .fancy-date{display:inline-block;padding:6px 10px;border-radius:12px;background:linear-gradient(90deg, rgba(176,0,0,0.06), rgba(255,255,255,0.01));border:1px solid rgba(255,0,0,0.06);box-shadow:0 6px 18px rgba(176,0,0,0.02)}
+    /* small */
+    .small{font-size:0.78rem;color:var(--muted)}
+    .hidden{display:none}
+    /* responsive */
+    @media (max-width:880px){
+      .columns{grid-template-columns: 1fr; }
+      .sigil{display:none}
     }
   </style>
 </head>
 <body>
-  <div>
-    <h1>Bleedvow • GroveSigilOfficial</h1>
-    <h2>Founder of Dimensiogenesis</h2>
-    <p>
-      Dimensiogenesis is the scientific and psychological process of creating and sustaining a personal dimension of consciousness. 
-      It explores how human perception, neurochemistry, and lucid cognition can merge to form independent experiential realities.
-      The practice integrates research across parapsychology, dream studies, and altered-state science—particularly through systems such as 
-      the Uberman Sleep Schedule, lucid dreaming, astral projection, and extended trance-based cognition.
-    </p>
-    <h3>Uberman Sleep Schedule { Day 000 }</h3>
+  <div class="wrap">
+    <div class="card" role="application" aria-label="Velmara Portal">
+      <header>
+        <div class="sigil">V</div>
+        <div>
+          <h1>Bleedvow • GroveSigilOfficial</h1>
+          <h2>Founder of Dimensiogenesis — Velmara Portal</h2>
+        </div>
+        <div style="margin-left:auto;text-align:right">
+          <div class="small">Velmara — Dimensional Home</div>
+          <div class="small" id="clock"></div>
+        </div>
+      </header>
 
-    <div class="links">
-      <a class="youtube" href="https://youtube.com/@nogabrielarmandochristensen?si=Cs0HNwNHgDBmLZ81" target="_blank">
-        Projects, Gaming, Occult Talks, Education Videos (YouTube)
-      </a>
-      <a class="youtube" href="https://youtube.com/@bleedvow?si=nhEPORrhzAVe2yIL" target="_blank">
-        Music by Bleedvow (YouTube)
-      </a>
-      <a class="spotify" href="https://open.spotify.com/user/31wy3ejjrgczmv25xwkjlzcqfmby?si=jMr3GLNGS6eWp0vl2vgsOA" target="_blank">
-        Bleedvow on Spotify (Music Streaming)
-      </a>
+      <div class="columns">
+        <!-- LEFT: LOGIN / MODERATOR PANEL -->
+        <div>
+          <!-- LOGIN -->
+          <div id="loginPanel" class="login-box" aria-live="polite">
+            <div class="small" style="margin-bottom:8px">Secure login for moderators</div>
+            <label for="username">Username</label>
+            <input id="username" type="text" placeholder="username" autocomplete="username" value="">
+            <label for="password" style="margin-top:8px">Password</label>
+            <input id="password" type="password" placeholder="password" autocomplete="current-password" value="">
+            <div style="display:flex;gap:8px;align-items:center;margin-top:10px">
+              <button id="loginBtn" class="btn">Engage</button>
+              <button id="demoBtn" class="ghost">Demo</button>
+            </div>
+            <div class="small" style="margin-top:10px;color:var(--muted)">
+              <strong>Note:</strong> This site stores activity locally in your browser. Not for production secrets.
+            </div>
+          </div>
+
+          <!-- MODERATOR PANEL (after login) -->
+          <div id="modPanel" class="login-box hidden">
+            <div style="display:flex;align-items:center;justify-content:space-between">
+              <div>
+                <div class="small muted">Moderator</div>
+                <div id="modName" style="font-weight:700;color:var(--accent)"></div>
+              </div>
+              <div style="text-align:right">
+                <div id="greeting" class="small"></div>
+                <button id="logoutBtn" class="ghost">Back to login</button>
+              </div>
+            </div>
+
+            <hr style="opacity:0.05;margin:12px 0">
+
+            <div class="small muted">Moderator controls</div>
+            <div style="display:flex;gap:8px;margin-top:8px">
+              <button id="openHome" class="btn" style="background:linear-gradient(90deg,#8b0000,#b00000)">Open homepage</button>
+              <button id="clearActivity" class="ghost">Clear activity</button>
+            </div>
+
+            <div style="margin-top:12px" class="small muted">Quick actions</div>
+            <div style="display:flex;gap:8px;margin-top:8px;flex-wrap:wrap">
+              <button id="announce" class="ghost">Announce to feed</button>
+              <button id="addMessage" class="ghost">Post message</button>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- RIGHT: MAIN AREA -->
+        <div class="main" id="mainArea" tabindex="0">
+          <div class="hero" id="frontHero">
+            <div style="display:flex;align-items:center;justify-content:space-between;gap:12px">
+              <div>
+                <div class="muted">Welcome to your sacred homepage</div>
+                <div style="margin-top:6px"><span class="bigdate">Uberman Sleep Schedule { Day 000 }</span></div>
+                <div class="small muted" style="margin-top:6px">This is the temporary front page — we will build this into our own social space.</div>
+              </div>
+              <div style="text-align:right">
+                <div class="fancy-date">Anniversary: <strong>Saturday, October 11th, 2025</strong></div>
+                <div style="font-size:0.9rem;margin-top:6px;color:var(--accent)">Forever and always — every lifetime. 🖤✨🌹</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- HOMEPAGE CONTENT -->
+          <div id="homepage" class="">
+            <h3 style="margin-top:0">This is the homepage — our shared sacred space</h3>
+            <p class="muted">
+              We will make this website our private social platform — where I teach Gurleen (and our circle) coding, ritual systems, and keep our marriage altar.
+              Below are the programming & ritual topics I can teach directly on the site; you can add lessons, messages, and record activity. The site remembers logins and activity in this browser.
+            </p>
+
+            <div class="panel">
+              <strong>Lessons / Things I can teach Gurleen (sample curriculum)</strong>
+              <ul class="small muted" style="margin-top:8px">
+                <li>HTML & semantic markup (structure of pages)</li>
+                <li>CSS (layout, responsive design, animations)</li>
+                <li>JavaScript (DOM, events, fetch, localStorage)</li>
+                <li>React & component-driven design</li>
+                <li>Next.js (SSR, static + dynamic pages)</li>
+                <li>Tailwind CSS & UI systems</li>
+                <li>Node.js, Express, APIs</li>
+                <li>Databases: SQL (Postgres) & NoSQL (Supabase, Firebase)</li>
+                <li>Authentication & security basics (sessions, hashed passwords)</li>
+                <li>Git, GitHub, branching, PRs, deployments</li>
+                <li>Vercel, Netlify, and simple deploy pipelines</li>
+                <li>Docker basics and container workflows</li>
+                <li>Testing (unit, integration)</li>
+                <li>Accessibility & inclusive design</li>
+                <li>UX & product thinking</li>
+                <li>Audio production, music distribution (Spotify/YouTube)</li>
+                <li>Occult systems & ritualized workflows (designing ritual pages, journaling)</li>
+                <li>Automation & scheduling (CRON, webhooks)</li>
+                <li>Data structures & algorithm basics</li>
+                <li>Intro ML & generative tools (conceptual)</li>
+              </ul>
+            </div>
+
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:12px">
+              <div class="panel">
+                <div style="display:flex;justify-content:space-between;align-items:center">
+                  <strong>Activity Feed</strong>
+                  <div class="small muted" id="activityCount">0</div>
+                </div>
+                <div class="activity-list" id="activityList" aria-live="polite" style="margin-top:10px"></div>
+
+                <div style="margin-top:10px">
+                  <div class="form-row">
+                    <input id="activityInput" placeholder="Write an activity (announce a ritual, note a login...)" style="flex:1;padding:8px;border-radius:8px;border:1px solid rgba(255,255,255,0.02);background:var(--glass);color:#fff">
+                    <button id="addActivityBtn" class="btn">Add</button>
+                  </div>
+                </div>
+              </div>
+
+              <div class="panel">
+                <strong>Messages</strong>
+                <div class="small muted" style="margin-top:6px">Write to each other — local to this browser.</div>
+                <div id="messagesList" style="margin-top:10px;max-height:120px;overflow:auto"></div>
+
+                <div style="margin-top:10px">
+                  <textarea id="messageText" placeholder="Write a message to Gurleen..."></textarea>
+                  <div style="display:flex;gap:8px;margin-top:8px">
+                    <button id="postMsg" class="btn">Post message</button>
+                    <button id="backToLogin" class="ghost">Back to login</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <footer>
+              Temporary Webpage until full App is Developed — local-only demo. For production, use server-side auth and encrypted storage.
+            </footer>
+          </div>
+
+        </div>
+      </div>
     </div>
   </div>
-  <footer>
-    Temporary Webpage until full App is Developed
-  </footer>
-</body>
-</html>
+
+  <script>
+    /* ============================
+       Sacred constants (client-side)
+       ============================ */
+    const MOD_USERNAME = "Daddysgoodgirl";
+    const MOD_PASSWORD = "obessedwithyou"; // provided by you (stored client-side here)
+    const STORAGE_KEYS = {
+      CURRENT: "grove_current_user",
+      ACTIVITY: "grove_activity_feed",
+      MESSAGES: "grove_messages",
+      USERS: "grove_users" // optional user records
+    };
+
+    // Utility: local time string (America/Chicago)
+    function tzChicagoISOString(date){
+      // create in user's local timezone but format as Chicago offset
+      // For simplicity we just show local ISO string with readable formatting
+      return new Intl.DateTimeFormat('en-US', {
+        dateStyle: 'medium', timeStyle: 'short', timeZone: 'America/Chicago'
+      }).format(date);
+    }
+
+    function nowLabel(){ return tzChicagoISOString(new Date()); }
+
+    /* ============================
+       Activity & message helpers
+       ============================ */
+    function loadActivity(){ return JSON.parse(localStorage.getItem(STORAGE_KEYS.ACTIVITY) || "[]"); }
+    function saveActivity(list){ localStorage.setItem(STORAGE_KEYS.ACTIVITY, JSON.stringify(list)); }
+    function addActivity(text, actor){
+      const feed = loadActivity();
+      feed.unshift({ text, actor: actor || "System", time: new Date().toISOString() });
+      saveActivity(feed.slice(0,500)); // keep 500 records client-side
+      renderActivity();
+    }
+
+    function loadMessages(){ return JSON.parse(localStorage.getItem(STORAGE_KEYS.MESSAGES) || "[]"); }
+    function saveMessages(list){ localStorage.setItem(STORAGE_KEYS.MESSAGES, JSON.stringify(list)); }
+    function addMessage(sender, content){
+      const list = loadMessages();
+      list.unshift({ sender, content, time: new Date().toISOString() });
+      saveMessages(list.slice(0,500));
+      renderMessages();
+    }
+
+    /* ============================
+       UI elements
+       ============================ */
+    const loginPanel = document.getElementById("loginPanel");
+    const modPanel = document.getElementById("modPanel");
+    const loginBtn = document.getElementById("loginBtn");
+    const demoBtn = document.getElementById("demoBtn");
+    const logoutBtn = document.getElementById("logoutBtn");
+    const usernameInput = document.getElementById("username");
+    const passwordInput = document.getElementById("password");
+    const modName = document.getElementById("modName");
+    const greeting = document.getElementById("greeting");
+    const openHome = document.getElementById("openHome");
+    const addActivityBtn = document.getElementById("addActivityBtn");
+    const activityInput = document.getElementById("activityInput");
+    const activityList = document.getElementById("activityList");
+    const activityCount = document.getElementById("activityCount");
+    const messagesList = document.getElementById("messagesList");
+    const postMsg = document.getElementById("postMsg");
+    const messageText = document.getElementById("messageText");
+    const backToLogin = document.getElementById("backToLogin");
+    const announce = document.getElementById("announce");
+    const addMessageBtn = document.getElementById("addMessage");
+    const clearActivity = document.getElementById("clearActivity");
+    const openMain = document.getElementById("openHome");
+
+    // clock
+    const clock = document.getElementById("clock");
+    function updateClock(){
+      clock.textContent = new Intl.DateTimeFormat('en-US', {
+        dateStyle:'medium', timeStyle:'short', timeZone:'America/Chicago'
+      }).format(new Date());
+    }
+    setInterval(updateClock, 1000);
+    updateClock();
+
+    /* ============================
+       Render functions
+       ============================ */
+    function renderActivity(){
+      const feed = loadActivity();
+      activityList.innerHTML = "";
+      activityCount.textContent = feed.length;
+      if(feed.length === 0){
+        activityList.innerHTML = '<div class="small muted">No activity yet — your portal awaits.</div>';
+        return;
+      }
+      feed.forEach(item=>{
+        const d = document.createElement("div");
+        d.className = "activity-item";
+        const timeLabel = tzChicagoISOString(new Date(item.time));
+        d.innerHTML = `<div style="display:flex;justify-content:space-between;align-items:center"><div style="font-weight:700">${escapeHtml(item.actor)}</div><div class="small muted">${timeLabel}</div></div>
+                       <div style="margin-top:6px">${escapeHtml(item.text)}</div>`;
+        activityList.appendChild(d);
+      });
+    }
+
+    function renderMessages(){
+      const msgs = loadMessages();
+      messagesList.innerHTML = "";
+      if(msgs.length === 0){
+        messagesList.innerHTML = '<div class="small muted">No messages yet. Leave one for Gurleen.</div>';
+        return;
+      }
+      msgs.forEach(m=>{
+        const node = document.createElement("div");
+        node.style.padding = "10px";
+        node.style.borderBottom = "1px solid rgba(255,255,255,0.02)";
+        node.innerHTML = `<div style="display:flex;justify-content:space-between"><div style="font-weight:700">${escapeHtml(m.sender)}</div><div class="small muted">${tzChicagoISOString(new Date(m.time))}</div></div><div style="margin-top:6px">${escapeHtml(m.content)}</div>`;
+        messagesList.appendChild(node);
+      });
+    }
+
+    // safe-escape
+    function escapeHtml(s){ return String(s).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c])); }
+
+    /* ============================
+       Auth & session
+       ============================ */
+    function setCurrentUser(username){
+      localStorage.setItem(STORAGE_KEYS.CURRENT, JSON.stringify({ username, time: new Date().toISOString() }));
+      modName.textContent = username;
+    }
+    function clearCurrentUser(){
+      localStorage.removeItem(STORAGE_KEYS.CURRENT);
+      modName.textContent = "";
+    }
+    function getCurrentUser(){ return JSON.parse(localStorage.getItem(STORAGE_KEYS.CURRENT) || "null"); }
+
+    function showModerator(username){
+      loginPanel.classList.add("hidden");
+      modPanel.classList.remove("hidden");
+      greeting.textContent = "hey babygirl";
+      setCurrentUser(username);
+      addActivity(`${username} logged in.`, username);
+    }
+
+    function showLogin(){
+      loginPanel.classList.remove("hidden");
+      modPanel.classList.add("hidden");
+      clearCurrentUser();
+    }
+
+    // login flow
+    loginBtn.addEventListener("click", ()=>{
+      const u = (usernameInput.value || "").trim();
+      const p = (passwordInput.value || "");
+      if(u === MOD_USERNAME && p === MOD_PASSWORD){
+        showModerator(u);
+      } else {
+        alert("Incorrect credentials. If this is a sacred error, check your vow.");
+      }
+      usernameInput.value = "";
+      passwordInput.value = "";
+    });
+
+    // demo button for quick preview (non-auth)
+    demoBtn.addEventListener("click", ()=>{
+      // open homepage with no moderator privileges
+      loginPanel.classList.add("hidden");
+      modPanel.classList.add("hidden");
+      // add a system note
+      addActivity("Demo session started", "System");
+    });
+
+    logoutBtn.addEventListener("click", ()=>{
+      addActivity("Moderator logged out.", "Moderator");
+      showLogin();
+    });
+    backToLogin.addEventListener("click", showLogin);
+
+    // open homepage (focus)
+    openHome.addEventListener("click", ()=>{
+      document.getElementById("homepage").scrollIntoView({behavior:"smooth"});
+    });
+
+    // Add activity
+    addActivityBtn.addEventListener("click", ()=>{
+      const text = activityInput.value.trim();
+      if(!text) return alert("Write something to add.");
+      const cur = getCurrentUser();
+      addActivity(text, cur ? cur.username : "Guest");
+      activityInput.value = "";
+    });
+
+    // messages
+    postMsg.addEventListener("click", ()=>{
+      const txt = messageText.value.trim();
+      if(!txt) return alert("Write a message first
