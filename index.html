@@ -15,7 +15,7 @@
       flex-direction: column;
       align-items: center;
       justify-content: flex-start;
-      height: 100vh;
+      min-height: 100vh;
       text-align: center;
       overflow-y: auto;
       scroll-behavior: smooth;
@@ -49,8 +49,9 @@
       margin-top: 1.5em;
       display: flex;
       flex-direction: column;
-      gap: 0.8em;
+      gap: 0.6em;
       animation: fadein 3s ease-in-out;
+      font-size: 0.95rem; /* slightly smaller */
     }
 
     a, .static-item {
@@ -81,6 +82,10 @@
 
     a.soundcloud::before {
       content: "☁️";
+    }
+
+    a.facebook::before {
+      content: "📘";
     }
 
     a:hover {
