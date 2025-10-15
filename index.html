@@ -21,15 +21,18 @@
       scroll-behavior: smooth;
     }
     h1 {
-      font-size: 2.5rem;
+      font-size: 3rem;
       letter-spacing: 1px;
-      margin-top: 2em;
+      margin-top: 2.5em;
       margin-bottom: 0.2em;
+      animation: fractalShrink 3.5s ease-in-out forwards;
     }
     .subtitle {
       font-size: 0.9rem;
       opacity: 0.8;
       margin-bottom: 1.2em;
+      animation: fadeIn 3s ease forwards;
+      animation-delay: 1s;
     }
     h2 {
       font-size: 1.5rem;
@@ -86,11 +89,11 @@
     a.spotify::before {
       content: "🎵";
     }
-    a.facebook::before {
-      content: "📘";
-    }
     a.soundcloud::before {
       content: "🎧";
+    }
+    a.facebook::before {
+      content: "📘";
     }
     .cod-username::before {
       content: "🎮";
@@ -105,6 +108,20 @@
     }
     @keyframes fadeIn {
       to { opacity: 1; }
+    }
+    @keyframes fractalShrink {
+      0% {
+        transform: scale(1.4);
+        text-shadow: 0 0 25px #b00000;
+      }
+      50% {
+        transform: scale(1.1);
+        text-shadow: 0 0 10px #ff2222;
+      }
+      100% {
+        transform: scale(1.0);
+        text-shadow: 0 0 3px #b00000;
+      }
     }
     footer {
       margin-top: 3em;
