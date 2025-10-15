@@ -28,6 +28,18 @@
       margin-bottom: 0.2em;
     }
 
+    .subtitle {
+      font-size: 0.9rem;
+      opacity: 0.8;
+      margin-bottom: 0.2em;
+    }
+
+    .married {
+      font-size: 0.8rem;
+      opacity: 0.7;
+      margin-bottom: 1.5em;
+    }
+
     h2 {
       font-size: 1.5rem;
       font-weight: 400;
@@ -72,21 +84,13 @@
       opacity: 0.85;
     }
 
-    a.youtube::before {
-      content: "🎥";
-    }
-
-    a.spotify::before {
-      content: "🎵";
-    }
-
-    a.soundcloud::before {
-      content: "☁️";
-    }
-
-    a.facebook::before {
-      content: "📘";
-    }
+    a.youtube::before { content: "🎥"; }
+    a.spotify::before { content: "🎵"; }
+    a.soundcloud::before { content: "☁️"; }
+    a.facebook::before { content: "📘"; }
+    a.twitch::before { content: "🎮"; }
+    a.x::before { content: "🐦"; }
+    a.instagram::before { content: "📸"; }
 
     a:hover {
       color: #ff3333;
@@ -99,12 +103,8 @@
     }
 
     @keyframes pulse {
-      0%, 100% {
-        opacity: 1;
-      }
-      50% {
-        opacity: 0.6;
-      }
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.6; }
     }
 
     @keyframes fadein {
@@ -123,9 +123,8 @@
 <body>
   <div>
     <h1>Bleedvow • GroveSigilOfficial</h1>
-    <div style="font-size: 0.9rem; opacity: 0.8; margin-bottom: 1.5em;">
-      Gabriel "Bleedvow" Christensen
-    </div>
+    <div class="subtitle">Gabriel "Bleedvow" Christensen</div>
+    <div class="married">Married since 10/11/25💎🖤✨🔒🗝️💍❤️‍🔥🌎🌌🌕🌊👑🌹🌴🐚</div>
     <h2>Founder of Dimensiogenesis</h2>
     <p>
       Dimensiogenesis is the scientific and psychological process of creating and sustaining a personal dimension of consciousness. 
@@ -150,6 +149,15 @@
       </a>
       <a class="facebook" href="https://www.facebook.com/profile.php?id=61582103645891&mibextid=ZbWKwL" target="_blank">
         Connect on Facebook
+      </a>
+      <a class="twitch" href="https://www.twitch.tv/bleedvow?sr=a" target="_blank">
+        Bleedvow on Twitch
+      </a>
+      <a class="x" href="https://x.com/bleedvow?t=SGp8kwIoRw8-S4TYZA_Hjg&s=09" target="_blank">
+        Bleedvow on X
+      </a>
+      <a class="instagram" href="https://www.instagram.com/xnogabrielarmandochristensenx?igsh=bTE2NjRtNWFqZHpw" target="_blank">
+        Bleedvow on Instagram
       </a>
       <div class="static-item">🎮 Call of Duty Mobile: <strong>Bleedvow</strong></div>
     </div>
