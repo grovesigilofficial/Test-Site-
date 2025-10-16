@@ -40,6 +40,7 @@
       margin-bottom: 0.2em;
     }
 
+    /* Emojis styling with flicker and hover glow */
     .emojis {
       font-size: 0.8rem;
       opacity: 0.8;
@@ -53,6 +54,13 @@
       display: inline-block;
       animation: emojiFlicker 2s infinite;
       margin: 0 0.05em;
+      transition: text-shadow 0.3s, transform 0.3s;
+      cursor: default;
+    }
+
+    .emojis span:hover {
+      text-shadow: 0 0 8px #ff4444, 0 0 12px #ff0000, 0 0 16px #cc0000;
+      transform: scale(1.2);
     }
 
     .emojis span:nth-child(2) { animation-delay: 0.1s; }
